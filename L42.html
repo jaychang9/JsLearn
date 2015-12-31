@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery扩展</title>
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+</head>
+<body>
+
+    <div style="height: 500px;width: 500px" id="test-highlight1"></div>
+    <p>
+        徕卡就是地方凉快水电费
+    </p>
+    <!-- HTML结构 -->
+    <div id="test-external">
+        <p>如何学习<a href="http://jquery.com">jQuery</a>？</p>
+        <p>首先，你要学习<a href="/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000">JavaScript</a>，并了解基本的<a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a>。</p>
+    </div>
+    <script>
+        $.fn.highLight1 = function(){
+            this.css("backgroundColor","#00bbcc").css("color","#ff0000");
+            return this;
+        };
+        $.fn.highLight2 = function(option){
+            var backgroundColor = option && option.backgroundColor || "fffceb";
+            var color = option && option.color || "d85030";
+            this.css("backgroundColor",backgroundColor).css("color",color);
+            return this;
+        };
+        $.fn.highLight3 = function(option){
+            var opt = $.extend({}, $.fn.highLight3.defaults,option);
+            return this.css("backgroundColor",opt.backgroundColor).css("color",opt.color);
+        };
+        //设定默认值
+        $.fn.highLight3.defaults  = {color:'#ff0000','backgroundColor':'#0faf00'};
+
+        $.fn.external = function(){
+            this.filter("a").each(function(){
+                var a = $(this);
+
+                var url = a.attr("href");
+                console.log(url);
+                if(url && (url.indexOf("http://")||url.indexOf("https://"))){
+
+                    a.attr("href","#0").removeAttr("target")
+                    .click(function(){
+                        if(confirm("确定要去那儿？")){
+                            window.open(url);
+                        }
+                    });
+
+                }
+
+            })
+        };
+        $('p').highLight3();
+        $('#test-highlight1').highLight1();
+        //$('p').highLight1();
+
+        //$('p').highLight2({backgroundColor:'#00ff00',color:'#0000ff'});
+
+
+        $('#test-external a').external();
+    </script>
+</body>
+</html>

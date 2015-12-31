@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Event</title>
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        "use strict";
+        var doSome = function (event) {
+            $('#info').text("e.x="+event.pageX+",e.y="+ event.pageY);
+        };
+
+        $(function () {
+            console.log('init A...');
+        });
+        $(function () {
+            console.log('init B...');
+        });
+        $(function () {
+            console.log('init C...');
+            $("#area").mousemove(doSome);
+        });
+        $(function(){
+            var
+                    form = $('#test-form'),
+                    langs = form.find('[name=lang]'),
+                    selectAll = form.find('label.selectAll :checkbox'),
+                    selectAllLabel = form.find('label.selectAll span.selectAll'),
+                    deselectAllLabel = form.find('label.selectAll span.deselectAll'),
+                    invertSelect = form.find('a.invertSelect');
+
+                    // 重置初始化状态:
+                    form.find('*').show().off();
+                    form.find(':checkbox').prop('checked', false).off();
+                    deselectAllLabel.hide();
+                    // 拦截form提交事件:
+                    form.off().submit(function (e) {
+                        e.preventDefault();
+                        alert(form.serialize());
+                    });
+
+                    selectAll.click(function(){
+                        if(selectAll.prop("checked")){
+                            langs.prop("checked",true);
+                            selectAllLabel.hide();
+                            deselectAllLabel.show();
+                        }else{
+                            langs.prop("checked",false);
+                            selectAllLabel.show();
+                            deselectAllLabel.hide();
+                        }
+                    });
+
+                    invertSelect.click(function(){
+                        langs.each(function(){
+                            var ele = $(this);
+                            if(ele.prop("checked")){
+                                ele.prop("checked",false);
+                            }else{
+                                ele.prop("checked",true);
+                            }
+                            ele.change();
+                        });
+                    });
+
+                    langs.change(function(){
+                        var ele = $(this);
+                        if(!ele.prop("checked")){
+                            selectAll.prop("checked",false);
+                            selectAllLabel.show();
+                            deselectAllLabel.hide();
+                        }else{
+                            var flag = true;
+                            langs.each(function(){
+                                if(!$(this).prop("checked")){
+                                    flag = false;
+                                }
+                            });
+                            if(flag){
+                                selectAll.prop("checked",true);
+                                selectAllLabel.hide();
+                                deselectAllLabel.show();
+                            }else{
+                                selectAll.prop("checked",false);
+                                selectAllLabel.show();
+                                deselectAllLabel.hide();
+                            }
+                        }
+                    });
+
+
+
+        });
+    </script>
+</head>
+<body>
+<!-- HTML结构 -->
+<form id="test-form" action="test">
+    <legend>请选择想要学习的编程语言：</legend>
+    <fieldset>
+        <p>
+            <label class="selectAll"><input type="checkbox">
+                <span class="selectAll">全选</span>
+                <span class="deselectAll">全不选</span>
+            </label>
+            <a href="#0" class="invertSelect">反选</a>
+        </p>
+        <p><label><input type="checkbox" name="lang" value="javascript"> JavaScript</label></p>
+        <p><label><input type="checkbox" name="lang" value="python"> Python</label></p>
+        <p><label><input type="checkbox" name="lang" value="ruby"> Ruby</label></p>
+        <p><label><input type="checkbox" name="lang" value="haskell"> Haskell</label></p>
+        <p><label><input type="checkbox" name="lang" value="scheme"> Scheme</label></p>
+        <p><button type="submit">Submit</button></p>
+    </fieldset>
+</form>
+<br>
+
+<div style="width: 800px;height: 500px;background-color: beige" id="area">
+
+</div>
+<span id="info"></span>
+
+<input type="button" value="取消绑定" onclick="$('#area').off('mousemove',doSome);"/><br>
+<input type="button" value="打开窗口" onclick="openWindow();"/><br>
+<input type="button" value="动画" onclick="doSome2();"/>
+<script>
+    function popupTestWindow() {
+        window.open('http://www.baidu.com/');
+    }
+    function openWindow(){
+        popupTestWindow();
+    }
+    function doSome2(){
+        $('#area').hide(3000);
+    }
+</script>
+
+</body>
+</html>

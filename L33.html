@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>File API</title>
+</head>
+<body>
+<br>
+<input type="file" name="imgFile" id="imgFile" />
+<br>
+<!--<img id="preview" />-->
+<div id="preview" style="border: 1px solid rgb(204, 204, 204); width: 50%; height: 200px; background-size: contain; background-position: 50% 50%; background-repeat: no-repeat;"></div>
+<br>
+<span id="info"></span>
+<br>
+<script>
+    'use strict'
+    var inputFile = document.getElementById("imgFile");
+    var info = document.getElementById("info");
+    var preview = document.getElementById("preview");
+    inputFile.addEventListener("change",function(evt){
+        var fileList = evt.target.files;
+        var file = fileList[0];
+        if(!inputFile.value){
+            alert("没有选择文件!");
+            return;
+        }
+        info.innerHTML="文件大小："+file.size+",文件类型:"+file.type+",文件名称:"+file.name+",最后修改时间："+file.lastModifiedDate;
+        if(file.type !== "image/jpeg" && file.type !== "image/png" && file.type !== "image/gif"){
+            alert("不是图片类型的文件!");
+            return;
+        }
+        var reader = new FileReader();
+
+        reader.onload = function(e){
+            var data = e.target.result;
+            console.log(data);
+            //preview.src = data;
+            preview.style.backgroundImage="url("+data+")";
+            console.log("完成");
+        };
+        console.log("readAsDataURL");
+        reader.readAsDataURL(file);
+    },false);
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+    <script>
+        var checkRegisterForm = function () {
+            alert("a");
+            var username = document.getElementById("username");
+            var password = document.getElementById("password");
+            var repassword = document.getElementById("password-2");
+            var usernameReg = /^[0-9a-zA-Z]{3,10}$/;
+            var passwordReg = /^\w{6,20}$/;
+            if(!usernameReg.test(username.value)){
+                alert("用户名必须是3-10位英文字母或数字");
+                return false;
+            }
+            if(!passwordReg.test(password.value)){
+                alert("口令必须是6-20位");
+                return false;
+            }
+            if(password.value !== repassword.value){
+                alert("两次输入口令必须一致");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+<!-- HTML结构 -->
+<form id="test-register" action="#" target="_blank" onsubmit="return checkRegisterForm()">
+    <p id="test-error" style="color:red"></p>
+    <p>
+        用户名: <input type="text" id="username" name="username">
+    </p>
+    <p>
+        口令: <input type="password" id="password" name="password">
+    </p>
+    <p>
+        重复口令: <input type="password" id="password-2">
+    </p>
+    <p>
+        <button type="submit">提交</button> <button type="reset">重置</button>
+    </p>
+</form>
+
+</body>
+</html>

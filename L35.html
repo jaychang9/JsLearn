@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>JSONP</title>
+</head>
+<body>
+<textarea id="test-response-text"></textarea>
+<script>
+    function foo(data){
+        document.getElementById("test-response-text").value=data["0000001"].name+":"+data["0000001"].price+","+data["1399001"].name+":"+data["1399001"].price;
+    }
+    function refresh(){
+        var js = document.createElement("script");
+        js.src="http://api.money.126.net/data/feed/0000001,1399001?callback=foo";
+        var head = document.getElementsByTagName("head")[0];
+        head.appendChild(js);
+    }
+</script>
+
+<input type="button" value="刷新" onclick="refresh();"/>
+</body>
+</html>

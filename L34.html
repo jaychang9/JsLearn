@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax</title>
+</head>
+<body>
+<textarea id="test-response-text" style="width: 100%;height: 800px;">
+
+</textarea>
+<script>
+    var request ;
+    if(window.XMLHttpRequest){
+        request = new XMLHttpRequest();
+    }else{
+        request = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+    request.onreadystatechange=function(){
+        if(request.readyState === 4){//请求完成
+            if(request.status === 200){//请求成功
+                console.log("请求成功");
+                document.getElementById("test-response-text").value = request.responseText;
+            }else{//请求失败
+                console.log("请求失败");
+                document.getElementById("test-response-text").value=request.status;
+            }
+        }else{//请求还在继续
+            console.log("请求还未完成...");
+        }
+    }
+
+    request.open("GET","/JS_L01/result.json");
+    request.send();
+</script>
+</body>
+</html>

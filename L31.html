@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert DOM</title>
+    <script>
+        /*
+            window.onload = function(){
+            var js = document.getElementById("js");
+            var list = document.getElementById("list");
+            console.log(list);
+            list.appendChild(js);
+        }*/
+
+        function doSome1(){
+            var js = document.getElementById("js");
+            var list = document.getElementById("list");
+            console.log(list);
+            list.appendChild(js);
+        }
+
+        function doSome2(){
+            var style = document.createElement("style");
+            style.type="text/css";
+            style.innerHTML="p{color:red;font-size:100px}";
+            document.getElementsByTagName("head")[0].appendChild(style);
+        }
+
+        function doSome3(){
+            try {
+                document.getElementsByTagName("style")[0].remove();
+            }catch(e){
+
+            }
+        }
+
+        function doSome4(){
+            var list = document.getElementById("list");
+            var c = document.createElement("p");
+            c.innerHTML="C Language";
+            list.insertBefore(c,list.firstElementChild.nextElementSibling);
+        }
+
+        function doSome5(){
+            var list = document.getElementById("list");
+            var str = "";
+            for(var i = 0 ; i < list.children.length;i++){
+                str+=list.children[i].innerText+",";
+            }
+            alert(str);
+        }
+    </script>
+</head>
+
+<body>
+<p id="js">JavaScript</p>
+<div id="list">
+    <p id="java">Java</p>
+    <p id="python">Python</p>
+    <p id="scheme">Scheme</p>
+</div>
+
+
+<!-- HTML结构 -->
+<ol id="test-list1">
+    <li class="lang">Scheme</li>
+    <li class="lang">JavaScript</li>
+    <li class="lang">Python</li>
+    <li class="lang">Ruby</li>
+    <li class="lang">Haskell</li>
+</ol>
+
+
+
+
+<script>
+    var liArray = document.getElementById("test-list1").children;
+    var arr = [];
+    for(var i = 0 ; i < liArray.length ; i ++){
+        arr.push(liArray[i]);
+    }
+    console.log(arr);
+
+    arr.sort(function(a,b){return a.innerText.toUpperCase() > b.innerText.toUpperCase();});
+
+    document.getElementById("test-list1").innerHTML = "";
+    for(var j = 0 ; j < arr.length ; j ++){
+        document.getElementById("test-list1").appendChild(arr[j]);
+    }
+
+</script>
+
+
+<!-- HTML结构 -->
+<ul id="test-list2">
+    <li>JavaScript</li>
+    <li>Swift</li>
+    <li>HTML</li>
+    <li>ANSI C</li>
+    <li>CSS</li>
+    <li>DirectX</li>
+</ul>
+
+
+<script>
+    var parent = document.getElementById("test-list2");
+    var p = parent.firstElementChild;
+    while(p != null){
+        var lang = p.innerText;
+        if(lang !== "JavaScript" && lang !== "HTML"  && lang !== "CSS"){
+            var temp = p;
+            p = p.nextElementSibling;
+            parent.removeChild(temp);
+            continue;
+        }
+        p = p.nextElementSibling;
+    }
+</script>
+
+<input type="button" value="change"   onclick="doSome1();"></input>
+<br>
+<input type="button" value="changeStyle"   onclick="doSome2();"></input>
+<br>
+<input type="button" value="removeStyle"   onclick="doSome3();"></input>
+<br>
+<input type="button" value="insertCBeforePython" onclick="doSome4();"></input>
+<br>
+<input type="button" value="allChildren"   onclick="doSome5();"></input>
+
+
+</body>
+</html>

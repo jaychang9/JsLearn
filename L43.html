@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript</title>
+    <script type="text/javascript" src="//cdn.bootcss.com/underscore.js/1.8.3/underscore-min.js"></script>
+</head>
+<body>
+    <script>
+        "use strict";
+        var arr = [1,2,3,4,5];
+        var arrRst = _.map(arr,(x) => x*x);
+        console.log(arr);
+        console.log(arrRst);
+
+        var obj = {a:1,b:2,c:19};
+        var objRst = _.map(obj,(k,v) => k+"="+v);
+        console.log(obj);
+        console.log(objRst);
+    </script>
+</body>
+</html>
